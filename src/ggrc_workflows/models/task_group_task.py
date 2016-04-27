@@ -1,4 +1,4 @@
-# Copyright (C) 2013 Google Inc., authors, and contributors <see AUTHORS file>
+# Copyright (C) 2016 Google Inc., authors, and contributors <see AUTHORS file>
 # Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 # Created By: dan@reciprocitylabs.com
 # Maintained By: dan@reciprocitylabs.com
@@ -10,7 +10,11 @@ from sqlalchemy import schema
 
 from ggrc import db
 from ggrc.login import get_current_user
-from ggrc.models.mixins import Base, Slugged, Titled, Described, WithContact
+from ggrc.models.mixins import Base
+from ggrc.models.mixins import Described
+from ggrc.models.mixins import Slugged
+from ggrc.models.mixins import Titled
+from ggrc.models.mixins import WithContact
 from ggrc.models.types import JsonType
 from ggrc_workflows.models.mixins import RelativeTimeboxed
 from ggrc_workflows.models.task_group import TaskGroup
@@ -160,7 +164,6 @@ class TaskGroupTask(WithContact, Slugged, Titled, Described, RelativeTimeboxed,
         'task_type', 'response_options',
     ]
 
-    contact = None
     if(kwargs.get('clone_people', False)):
       contact = self.contact
     else:

@@ -15,13 +15,14 @@ from ggrc.models.mixins import Described
 from ggrc.models.mixins import Slugged
 from ggrc.models.mixins import Titled
 from ggrc.models.mixins import WithContact
+from ggrc.models.relationship import Relatable
 from ggrc.models.types import JsonType
 from ggrc_workflows.models.mixins import RelativeTimeboxed
 from ggrc_workflows.models.task_group import TaskGroup
 
 
 class TaskGroupTask(WithContact, Slugged, Titled, Described, RelativeTimeboxed,
-                    Base, db.Model):
+                    Relatable, Base, db.Model):
   __tablename__ = 'task_group_tasks'
   __table_args__ = (
       schema.CheckConstraint('start_date <= end_date'),

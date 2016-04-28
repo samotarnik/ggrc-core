@@ -5,32 +5,33 @@
  * Maintained By: dan@reciprocitylabs.com
  */
 
-(function($, CMS, GGRC) {
-  var WorkflowExtension = {},
-      _workflow_object_types = Array.prototype.concat.call([],
-        "Program Regulation Policy Standard Contract Clause Section Request".split(" "),
-        "Control Objective OrgGroup Vendor AccessGroup".split(" "),
-        "System Process DataAsset Product Project Facility Market Issue Assessment".split(" "),
-        "Risk Threat".split(" ")
-      ),
-      _task_sort_function = function(a, b) {
-        var date_a = +new Date(a.end_date),
-            date_b = +new Date(b.end_date);
-        if (date_a === date_b) {
-          if (a.id < b.id) {
-            return -1;
-          } else if (a.id > b.id) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
-        if (date_a < date_b) {
-          return -1;
-        } else {
-          return 1;
-        }
-      };
+(function ($, CMS, GGRC) {
+  var WorkflowExtension = {};
+  var _workflow_object_types = Array.prototype.concat.call([],
+      "Program Regulation Policy Standard Contract Clause Section Request".split(" "),
+      "Control Objective OrgGroup Vendor AccessGroup".split(" "),
+      "System Process DataAsset Product Project Facility Market Issue Assessment".split(" "),
+      "Risk Threat".split(" ")
+  );
+  var _task_sort_function = function (a, b) {
+    var date_a = +new Date(a.end_date);
+    var date_b = +new Date(b.end_date);
+
+    if (date_a === date_b) {
+      if (a.id < b.id) {
+        return -1;
+      } else if (a.id > b.id) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    if (date_a < date_b) {
+      return -1;
+    } else {
+      return 1;
+    }
+  };
 
   // Register `workflows` extension with GGRC
   GGRC.extensions.push(WorkflowExtension);
@@ -197,7 +198,7 @@
 
         // This code needs to be reworked to figure out how to return the single
         // most recent task entry with is_declining_review = true.
-        declining_cycle_task_entries: Search(function(binding) {
+        declining_cycle_task_entries: Search(function (binding) {
           return CMS.Models.CycleTaskEntry.findAll({
             cycle_task_group_object_task_id: binding.instance.id,
             is_declining_review: 1
@@ -251,11 +252,12 @@
             'System', 'Threat', 'Vendor'
           ]
         },
-        related_objects_as_source: Proxy(
-          null, 'destination', 'Relationship', 'source', 'related_destinations'),
-        related_objects_as_destination: Proxy(
-          null, 'source', 'Relationship', 'destination', 'related_sources'),
-        related_objects: Multi(['related_objects_as_source', 'related_objects_as_destination']),
+        related_objects_as_source: Proxy(null, 'destination', 'Relationship',
+            'source', 'related_destinations'),
+        related_objects_as_destination: Proxy(null, 'source', 'Relationship',
+            'destination', 'related_sources'),
+        related_objects: Multi(['related_objects_as_source',
+            'related_objects_as_destination']),
         destinations: Direct('Relationship', 'source', 'related_destinations'),
         sources: Direct('Relationship', 'destination', 'related_sources'),
         relationships: Multi(['sources', 'destinations']),
@@ -288,9 +290,10 @@
           'TaskGroup',
           'task_group_tasks',
           'task_group'),
-        info_related_objects: CustomFilter('related_objects', function (related_objects) {
-          return !_.includes(['Comment', 'Document', 'Person'], related_objects.instance.type);
-        })
+        info_related_objects: CustomFilter('related_objects',
+            function (related_objects) {
+              return !_.includes(['Comment', 'Document', 'Person'], related_objects.instance.type);
+            })
       }
     };
 
@@ -370,8 +373,7 @@
     WorkflowExtension.init_global();
   };
 
-  WorkflowExtension.init_widgets_for_other_pages =
-      function init_widgets_for_other_pages() {
+  WorkflowExtension.init_widgets_for_other_pages = function init_widgets_for_other_pages() {  // eslint-disable-line max-len
     var descriptor = {};
     var page_instance = GGRC.page_instance();
 
@@ -386,7 +388,7 @@
             parent_instance: page_instance,
             model: CMS.Models.Workflow,
             show_view: GGRC.mustache_path + '/workflows/tree.mustache',
-            footer_view: null,
+            footer_view: null
           }
         },
         task: {

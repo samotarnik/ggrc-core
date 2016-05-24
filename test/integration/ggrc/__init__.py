@@ -5,8 +5,11 @@
 
 """Base test case for all ggrc integration tests."""
 
+from os import path
 import logging
+from flask import json
 from flask.ext.testing import TestCase as BaseTestCase
+
 from ggrc import db
 from ggrc.app import app
 
@@ -14,10 +17,14 @@ from ggrc.app import app
 # done. This is for the bad request error messages while testing the api calls.
 logging.disable(logging.CRITICAL)
 
+THIS_ABSOLUTE_PATH = path.abspath(path.dirname(__file__))
+
 
 class TestCase(BaseTestCase):
 
   maxDiff = None
+  CSV_FILES_FOLDER = path.normpath(path.join(THIS_ABSOLUTE_PATH,
+                                             '../../csv_files/'))
 
   @classmethod
   def clear_data(cls):
@@ -64,3 +71,34 @@ class TestCase(BaseTestCase):
     app.testing = True
     app.debug = False
     return app
+
+  def import_file(self, filename, dry_run=False):
+    if dry_run:
+      return self._import_file(filename, dry_run=True)
+    else:
+      response_dry = self._import_file(filename, dry_run=True)
+      response = self._import_file(filename)
+      self.assertEqual(response_dry, response)
+      return response
+
+  def export_csv(self, data):
+    headers = {
+        'Content-Type': 'application/json',
+        'X-requested-by': 'gGRC',
+        'X-export-view': 'blocks',
+    }
+    return self.client.post("/_service/export_csv", data=json.dumps(data),
+                            headers=headers)
+
+  def _import_file(self, filename, dry_run=False):
+    data = {
+        'file': (open(path.join(self.CSV_FILES_FOLDER, filename)), filename)
+    }
+    headers = {
+        'X-test-only': 'true' if dry_run else 'false',
+        'X-requested-by': 'gGRC',
+    }
+    response = self.client.post("/_service/import_csv",
+                                data=data, headers=headers)
+    self.assert200(response)
+    return json.loads(response.data)

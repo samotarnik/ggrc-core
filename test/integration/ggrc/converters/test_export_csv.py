@@ -3,7 +3,7 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from os.path import abspath, dirname, join
+from os import path
 from flask.json import dumps
 
 from ggrc.app import app
@@ -11,8 +11,8 @@ from ggrc.converters import get_importables
 from ggrc.models.reflection import AttributeInfo
 from integration.ggrc import TestCase
 
-THIS_ABS_PATH = abspath(dirname(__file__))
-CSV_DIR = join(THIS_ABS_PATH, 'test_csvs/')
+THIS_ABS_PATH = path.abspath(path.dirname(__file__))
+CSV_DIR = path.normpath(path.join(THIS_ABS_PATH, '../../../csv_files/'))
 
 
 class TestExportEmptyTemplate(TestCase):
@@ -65,7 +65,7 @@ class TestExportSingleObject(TestCase):
 
   @classmethod
   def import_file(cls, filename, dry_run=False):
-    data = {"file": (open(join(CSV_DIR, filename)), filename)}
+    data = {"file": (open(path.join(CSV_DIR, filename)), filename)}
     headers = {
         "X-test-only": "true" if dry_run else "false",
         "X-requested-by": "gGRC",
@@ -366,7 +366,7 @@ class TestExportMultipleObjects(TestCase):
 
   @classmethod
   def import_file(cls, filename, dry_run=False):
-    data = {"file": (open(join(CSV_DIR, filename)), filename)}
+    data = {"file": (open(path.join(CSV_DIR, filename)), filename)}
     headers = {
         "X-test-only": "true" if dry_run else "false",
         "X-requested-by": "gGRC",

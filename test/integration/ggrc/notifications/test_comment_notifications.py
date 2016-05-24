@@ -13,16 +13,16 @@ from ggrc import db
 from ggrc.models import Request
 from ggrc.models import Notification
 from ggrc.models import NotificationType
-from integration.ggrc import converters
+from integration.ggrc import TestCase
 from integration.ggrc import generator
 
 
-class TestCommentNotification(converters.TestCase):
+class TestCommentNotification(TestCase):
 
   """Test notification on request comments."""
 
   def setUp(self):
-    converters.TestCase.setUp(self)
+    TestCase.setUp(self)
     self.client.get("/login")
     self._fix_notification_init()
     self.generator = generator.ObjectGenerator()

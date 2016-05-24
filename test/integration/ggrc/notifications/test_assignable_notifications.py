@@ -14,16 +14,16 @@ from ggrc import db
 from ggrc.models import Request
 from ggrc.models import Notification
 from ggrc.models import NotificationType
-from integration.ggrc import converters
+from integration.ggrc import TestCase
 from integration.ggrc import api_helper
 
 
-class TestAssignableNotification(converters.TestCase):
+class TestAssignableNotification(TestCase):
 
   """Test setting notifications for assignable mixin."""
 
   def setUp(self):
-    converters.TestCase.setUp(self)
+    TestCase.setUp(self)
     self.client.get("/login")
     self._fix_notification_init()
     self.api_helper = api_helper.Api()

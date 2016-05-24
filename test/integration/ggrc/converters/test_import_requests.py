@@ -11,10 +11,10 @@ from nose.plugins import skip
 
 from ggrc import models
 from ggrc.converters import errors
-from integration.ggrc import converters
+from integration.ggrc import TestCase
 
 
-class TestRequestImport(converters.TestCase):
+class TestRequestImport(TestCase):
 
   """Basic Request import tests with.
 
@@ -24,7 +24,7 @@ class TestRequestImport(converters.TestCase):
 
   def setUp(self):
     """ Set up for Request test cases """
-    converters.TestCase.setUp(self)
+    TestCase.setUp(self)
     self.client.get("/login")
 
   def _test_request_users(self, request, users):

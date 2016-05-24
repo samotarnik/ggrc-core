@@ -13,15 +13,15 @@ from ggrc.models import Notification
 from ggrc.models import NotificationType
 from ggrc.models import Request
 from integration.ggrc import api_helper
-from integration.ggrc import converters
+from integration.ggrc import TestCase
 from integration.ggrc import generator
 
 
-class TestRequestDataHandlers(converters.TestCase):
+class TestRequestDataHandlers(TestCase):
   """Test data handlers for various request notifications."""
 
   def setUp(self):
-    converters.TestCase.setUp(self)
+    TestCase.setUp(self)
     self.client.get("/login")
     self.api_helper = api_helper.Api()
     self.import_file("request_full_no_warnings.csv")

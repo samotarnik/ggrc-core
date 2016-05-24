@@ -3,14 +3,13 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from ggrc.converters import errors
-from integration.ggrc import converters
+from integration.ggrc import TestCase
 
 
-class TestBasicCsvImport(converters.TestCase):
+class TestBasicCsvImport(TestCase):
 
   def setUp(self):
-    converters.TestCase.setUp(self)
+    TestCase.setUp(self)
     self.client.get("/login")
 
   def test_policy_basic_import(self):

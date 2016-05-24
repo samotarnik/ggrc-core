@@ -4,7 +4,7 @@
 # Maintained By: miha@reciprocitylabs.com
 
 from ggrc.models import Person
-from integration.ggrc.converters import TestCase
+from integration.ggrc import TestCase
 from integration.ggrc.generator import ObjectGenerator
 
 

@@ -3,7 +3,7 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from integration.ggrc.converters import TestCase
+from integration.ggrc import TestCase
 
 
 class TestImportUpdates(TestCase):

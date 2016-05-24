@@ -6,7 +6,7 @@
 from ggrc.models import Policy
 from ggrc.models import Relationship
 from ggrc.converters import errors
-from integration.ggrc.converters import TestCase
+from integration.ggrc import TestCase
 from integration.ggrc.generator import ObjectGenerator
 
 

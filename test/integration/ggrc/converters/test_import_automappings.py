@@ -3,8 +3,6 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from ggrc.models import Relationship
-from ggrc.converters import errors
 from integration.ggrc import TestCase
 from integration.ggrc.generator import ObjectGenerator
 
@@ -16,10 +14,9 @@ class TestBasicCsvImport(TestCase):
     self.generator = ObjectGenerator()
     self.client.get("/login")
 
-
   def test_basic_automappings(self):
     filename = "automappings.csv"
-    response = self.import_file(filename)
+    self.import_file(filename)
     data = [{
         "object_name": "Program",
         "filters": {
@@ -35,4 +32,3 @@ class TestBasicCsvImport(TestCase):
     for i in range(1, 8):
       self.assertIn("reg-{}".format(i), response.data)
       self.assertIn("control-{}".format(i), response.data)
-

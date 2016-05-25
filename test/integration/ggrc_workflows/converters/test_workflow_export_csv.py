@@ -5,11 +5,11 @@
 
 """Tests for workflow object exports."""
 
-from flask.json import dumps
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 from os.path import normpath
+from flask.json import dumps
 
 from ggrc.app import app
 from ggrc_workflows.models import Workflow

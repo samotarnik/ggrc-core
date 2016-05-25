@@ -3,11 +3,11 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from flask.json import dumps
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 from os.path import normpath
+from flask.json import dumps
 
 from ggrc.app import app
 from ggrc.converters import get_importables
@@ -350,9 +350,9 @@ class TestExportSingleObject(TestCase):
         if field is None:
           continue
         try:
-         field = field["display_name"] if type(field) is dict else field
-         res = self.export_csv(data(model, attr, field))
-         self.assertEqual(res.status_code, 200)
+          field = field["display_name"] if isinstance(field, dict) else field
+          res = self.export_csv(data(model, attr, field))
+          self.assertEqual(res.status_code, 200)
         except Exception as e:
           failed.add((model, attr, field, e))
     self.assertEqual(sorted(failed), [])

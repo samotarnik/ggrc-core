@@ -3,9 +3,7 @@
 # Created By: miha@reciprocitylabs.com
 # Maintained By: miha@reciprocitylabs.com
 
-from ggrc.models import Policy
 from ggrc.models import Relationship
-from ggrc.converters import errors
 from integration.ggrc import TestCase
 from integration.ggrc.generator import ObjectGenerator
 
@@ -16,7 +14,6 @@ class TestUnmappings(TestCase):
     TestCase.setUp(self)
     self.generator = ObjectGenerator()
     self.client.get("/login")
-
 
   def test_policy_basic_import(self):
     filename = "multi_basic_policy_orggroup_product_with_mappings.csv"

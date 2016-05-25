@@ -5,9 +5,6 @@
 
 """Test audit RBAC"""
 
-from os.path import abspath
-from os.path import dirname
-from os.path import join
 from collections import defaultdict
 from integration.ggrc import TestCase
 from integration.ggrc.api_helper import Api
@@ -16,8 +13,6 @@ from ggrc.models import all_models
 
 class TestAuditRBAC(TestCase):
   """Test audit RBAC"""
-
-  CSV_DIR = join(abspath(dirname(__file__)), "test_csvs")
 
   def setUp(self):
     """Imports test_csvs/audit_rbac.csv needed by the tests"""

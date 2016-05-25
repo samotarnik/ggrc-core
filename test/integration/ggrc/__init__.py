@@ -73,11 +73,17 @@ class TestCase(BaseTestCase):
     return app
 
   def import_file(self, filename, dry_run=False):
+    # first, some hacking: we extract the module where import_file is called
+    # and get its ggrc extension. the latter is then used for the sub-folder
+    # lookup
+    module_called_from = self.__call__.im_self.__class__.__module__
+    extension_used = module_called_from.split('.')[1]
+
     if dry_run:
-      return self._import_file(filename, dry_run=True)
+      return self._import_file(extension_used, filename, dry_run=True)
     else:
-      response_dry = self._import_file(filename, dry_run=True)
-      response = self._import_file(filename)
+      response_dry = self._import_file(extension_used, filename, dry_run=True)
+      response = self._import_file(extension_used, filename)
       self.assertEqual(response_dry, response)
       return response
 
@@ -90,9 +96,10 @@ class TestCase(BaseTestCase):
     return self.client.post("/_service/export_csv", data=json.dumps(data),
                             headers=headers)
 
-  def _import_file(self, filename, dry_run=False):
+  def _import_file(self, module_name, filename, dry_run=False):
+    full_filepath = path.join(self.CSV_FILES_FOLDER, module_name, filename)
     data = {
-        'file': (open(path.join(self.CSV_FILES_FOLDER, filename)), filename)
+        'file': (open(full_filepath), filename)
     }
     headers = {
         'X-test-only': 'true' if dry_run else 'false',

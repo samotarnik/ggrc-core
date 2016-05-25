@@ -7,9 +7,6 @@
 """Tests for workflow specific imports."""
 
 from datetime import date
-from os.path import abspath
-from os.path import dirname
-from os.path import join
 
 from integration.ggrc import TestCase
 
@@ -20,13 +17,9 @@ from ggrc_workflows.models.task_group_object import TaskGroupObject
 from ggrc_workflows.models.task_group_task import TaskGroupTask
 from ggrc_workflows.models.workflow import Workflow
 
-THIS_ABS_PATH = abspath(dirname(__file__))
-
 
 class TestWorkflowObjectsImport(TestCase):
   """Test imports for basic workflow objects."""
-
-  CSV_DIR = join(THIS_ABS_PATH, "test_csvs/")
 
   def setUp(self):
     TestCase.setUp(self)

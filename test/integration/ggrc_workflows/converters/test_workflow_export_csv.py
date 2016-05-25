@@ -5,8 +5,11 @@
 
 """Tests for workflow object exports."""
 
-from os.path import abspath, dirname, join
 from flask.json import dumps
+from os.path import abspath
+from os.path import dirname
+from os.path import join
+from os.path import normpath
 
 from ggrc.app import app
 from ggrc_workflows.models import Workflow
@@ -14,7 +17,7 @@ from integration.ggrc import TestCase
 from integration.ggrc_workflows.generator import WorkflowsGenerator
 
 THIS_ABS_PATH = abspath(dirname(__file__))
-CSV_DIR = join(THIS_ABS_PATH, 'test_csvs/')
+CSV_DIR = normpath(join(THIS_ABS_PATH, '../../../csv_files/ggrc_workflows/'))
 
 
 class TestExportEmptyTemplate(TestCase):
